@@ -28,31 +28,51 @@ vector<vector<double>> parseData(const string pathToFile, size_t numCol)
         exit(2);
     }
 
-    while (!ifs.eof())
-    {
-        string row = "";
-        getline(ifs, row);
-        for (size_t i = 0; i < numCol; i++)
-        {
+    // while (!ifs.eof())
+    // {
+    //     string row = "";
+    //     getline(ifs, row);
+    //     for (size_t i = 0; i < numCol; i++)
+    //     {
 
-            string delimiter = ",";
-            size_t start = 0;
-            size_t end;
-            string word;
-            while (row.find(delimiter) != string::npos)
+    //         string delimiter = ",";
+    //         size_t start = 0;
+    //         size_t end;
+    //         string word;
+    //         while (row.find(delimiter) != string::npos)
+    //         {
+    //             end = row.find(delimiter);
+    //             word = row.substr(start, end);
+    //             if (end == 1 || end == 0)
+    //             {
+    //                 result.at(i).clear();
+    //                 i--;
+    //                 break;
+    //             }
+    //             result.at(i).push_back(stod(word));
+    //             row.erase(start, word.length() + 1);
+    //         }
+    //     }
+    // }
+
+    while (!ifs.fail())
+    {
+        string val = "";
+        vector<double> row;
+        for (int i = 0; i < numCol; i++)
+        {
+            getline(ifs, val, ',');
+            if (val == "")
             {
-                end = row.find(delimiter);
-                word = row.substr(start, end);
-                if (end == 1 || end == 0)
-                {
-                    result.at(i).clear();
-                    i--;
-                    break;
-                }
-                result.at(i).push_back(stod(word));
-                row.erase(start, word.length() + 1);
+                row.clear();
+                break;
+            }
+            else
+            {
+                row.push_back(stod(val));
             }
         }
+        result.push_back(row);
     }
 
     return result;
