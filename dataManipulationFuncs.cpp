@@ -90,7 +90,7 @@ vector<vector<double>> smoothData(vector<vector<double>> &rawData, size_t window
 
     // const vector<vector<double>> parsed = rawData;
 
-    for (size_t i = 0; i < rawData.size(); i++)
+    for (size_t i = 1; i < rawData.size(); i++)
     {
         size_t window = windowSize;
         if (rawData.size() - i < windowSize)
