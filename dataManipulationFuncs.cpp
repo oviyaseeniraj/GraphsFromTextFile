@@ -30,24 +30,42 @@ vector<vector<double>> parseData(const string pathToFile, size_t numCol)
 
     while (!ifs.eof())
     {
-        string time;
-        string oxygen;
-        string carbon;
+        string row;
+        getline(ifs, row);
 
-        getline(ifs, time, ',');
-        getline(ifs, oxygen, ',');
-        getline(ifs, carbon);
+        stringstream unparsed(row);
 
-        if (carbon == "")
+        vector<string> parsedRow;
+
+        for (size_t i = 0; i < numCol; i++)
         {
-            break;
+            getline(unparsed, parsedRow.at(i), ',');
+            if (parsedRow.at(i) == "")
+            {
+                break;
+            }
         }
-        else
+
+        if (parsedRow.size() == numCol)
         {
-            result.at(2).push_back(stod(carbon));
-            result.at(1).push_back(stod(oxygen));
-            result.at(0).push_back(stod(time));
+            if (parsedRow.at(2) == "")
+                break;
+            result.at(0).push_back(stod(parsedRow.at(0)));
+            result.at(1).push_back(stod(parsedRow.at(1)));
+            result.at(2).push_back(stod(parsedRow.at(2)));
         }
+
+        // vector<double> parsedRow;
+
+        // for (int i = 0; i < row.length(); i++)
+        // {
+        //     if (row.at(i) == ',')
+        //     {
+        //         parsedRow.push_back(stod(row.substr(0, i)));
+        //         row.erase(0, i + 1);
+        //         i = 0;
+        //     }
+        // }
     }
 
     return result;
