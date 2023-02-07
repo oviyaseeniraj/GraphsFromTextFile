@@ -28,15 +28,15 @@ vector<vector<double>> parseData(const string pathToFile, size_t numCol)
         exit(2);
     }
 
-    while (!ifs.fail())
+    while (!ifs.eof())
     {
         string time;
         string oxygen;
         string carbon;
 
-        ifs >> time;
-        ifs >> oxygen;
-        ifs >> carbon;
+        getline(ifs, time, ',');
+        getline(ifs, oxygen, ',');
+        getline(ifs, carbon);
 
         if (carbon == "")
         {
