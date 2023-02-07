@@ -27,40 +27,54 @@ vector<vector<double>> parseData(const string pathToFile, size_t numCol)
         cerr << "Could not open file " + pathToFile << endl;
         exit(2);
     }
+    
+    string data; 
 
     while (!ifs.eof())
     {
-        string row;
-        getline(ifs, row);
+        // string row;
+        // getline(ifs, row);
 
-        bool threeVals = true;
-        while (row.find(',') != string::npos)
-        {
-            if (row.find(',') == 0 || row.find(',') == row.length() - 1)
-            {
-                threeVals = false;
-                row.at(row.find(',')) = ' ';
-            }
-            if (!isdigit(row.at(row.find(',') + 1)) || !isdigit(row.at(row.find(',') + 1)))
-            {
-                threeVals = false;
-                row.at(row.find(',')) = ' ';
-            }
-        }
+        // bool threeVals = true;
+        // while (row.find(',') != string::npos)
+        // {
+        //     if (row.find(',') == 0 || row.find(',') == row.length() - 1)
+        //     {
+        //         threeVals = false;
+        //         row.at(row.find(',')) = ' ';
+        //     }
+        //     if (!isdigit(row.at(row.find(',') + 1)) || !isdigit(row.at(row.find(',') + 1)))
+        //     {
+        //         threeVals = false;
+        //         row.at(row.find(',')) = ' ';
+        //     }
+        // }
 
-        if (threeVals == false)
-        {
-            continue;
-        }
+        // if (threeVals == false)
+        // {
+        //     continue;
+        // }
 
-        stringstream unsplit(row);
+        // stringstream unsplit(row);
 
-        for (size_t i = 0; i < numCol; i++)
-        {
-            string var = "";
-            getline(unsplit, var, ' ');
-            result[i].push_back(stod(var));
-        }
+        // for (size_t i = 0; i < numCol; i++)
+        // {
+        //     string var = "";
+        //     getline(unsplit, var, ' ');
+        //     result[i].push_back(stod(var));
+        // }
+
+        getline(ifs, data, ',');
+        if(data.length()==0){continue;}
+        else {result[0].push_back(stod(data));}
+
+        getline(ifs, data, ',');
+        if(data.length()==0){result[0].pop_back(); continue;}
+        else {result[1].push_back(stod(data));}
+
+        getline(ifs, data);
+        if(data.length()==0){result[0].pop_back(); result[1].pop_back(); continue;}
+        else {result[2].push_back(stod(data));}
 
         // string row;
         // getline(ifs, row);
@@ -101,7 +115,7 @@ vector<vector<double>> parseData(const string pathToFile, size_t numCol)
         //     }
         // }
     }
-
+    ifs.close();
     return result;
 }
 
