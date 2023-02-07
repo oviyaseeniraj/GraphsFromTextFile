@@ -36,8 +36,7 @@ vector<vector<double>> parseData(const string pathToFile, size_t numCol)
         bool threeVals = true;
         while (row.find(',') != string::npos)
         {
-            if (row.fin
-            d(',') == 0 || row.find(',') == row.length() - 1)
+            if (row.find(',') == 0 || row.find(',') == row.length() - 1)
             {
                 threeVals = false;
                 row.at(row.find(',')) = ' ';
