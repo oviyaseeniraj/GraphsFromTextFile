@@ -28,8 +28,6 @@ vector<vector<double>> parseData(const string pathToFile, size_t numCol)
         exit(2);
     }
 
-    string data;
-
     while (!ifs.eof())
     {
         string row;
@@ -43,7 +41,7 @@ vector<vector<double>> parseData(const string pathToFile, size_t numCol)
                 threeVals = false;
                 row.at(row.find(',')) = ' ';
             }
-            else if (!isdigit(row.at(row.find(',') + 1)) || !isdigit(row.at(row.find(',') + 1)))
+            else if ((row.at(row.find(',') + 1)) == ',' || (row.at(row.find(',') + 1)) == ',')
             {
                 threeVals = false;
                 row.at(row.find(',')) = ' ';
@@ -60,6 +58,7 @@ vector<vector<double>> parseData(const string pathToFile, size_t numCol)
         }
 
         stringstream unsplit(row);
+        cout << row << endl;
 
         for (size_t i = 0; i < numCol; i++)
         {
@@ -69,7 +68,6 @@ vector<vector<double>> parseData(const string pathToFile, size_t numCol)
                 result[i].push_back(stod(var));
         }
     }
-    ifs.close();
     return result;
 }
 
