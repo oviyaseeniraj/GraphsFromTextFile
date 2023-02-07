@@ -35,24 +35,26 @@ vector<vector<double>> parseData(const string pathToFile, size_t numCol)
 
         stringstream unparsed(row);
 
-        vector<string> parsedRow;
+        // vector<string> parsedRow;
 
-        for (size_t i = 0; i < numCol; i++)
+        string arr[3];
+        size_t i = 0;
+        for (i = 0; i < numCol; i++)
         {
-            getline(unparsed, parsedRow.at(i), ',');
-            if (parsedRow.at(i) == "")
+            getline(unparsed, arr[i], ',');
+            if (arr[i] == "")
             {
                 break;
             }
         }
 
-        if (parsedRow.size() == numCol)
+        if (i + 1 == numCol)
         {
-            if (parsedRow.at(2) == "")
+            if (arr[2] == "")
                 break;
-            result.at(0).push_back(stod(parsedRow.at(0)));
-            result.at(1).push_back(stod(parsedRow.at(1)));
-            result.at(2).push_back(stod(parsedRow.at(2)));
+            result.at(0).push_back(stod(arr[0]));
+            result.at(1).push_back(stod(arr[1]));
+            result.at(2).push_back(stod(arr[2]));
         }
 
         // vector<double> parsedRow;
