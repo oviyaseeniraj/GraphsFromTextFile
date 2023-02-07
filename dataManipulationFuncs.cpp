@@ -30,20 +30,27 @@ vector<vector<double>> parseData(const string pathToFile, size_t numCol)
 
     while (!ifs.eof())
     {
+        string row = "";
+        getline(ifs, row);
         for (size_t i = 0; i < numCol; i++)
         {
-            double time = 0;
-            double carbon = 0;
-            double oxygen = 0;
-            ifs >> time;
-            ifs >> oxygen;
-            ifs >> carbon;
 
-            if (!(time == 0 || carbon == 0 || oxygen == 0))
+            string delimiter = ",";
+            size_t start = 0;
+            size_t end;
+            string word;
+            while (row.find(delimiter) != string::npos)
             {
-                result.at(0).push_back(time);
-                result.at(1).push_back(oxygen);
-                result.at(2).push_back(carbon);
+                end = row.find(delimiter);
+                word = row.substr(start, end);
+                if (end == 1 || end == 0)
+                {
+                    result.at(i).clear();
+                    i--;
+                    break;
+                }
+                result.at(i).push_back(stod(word));
+                row.erase(start, word.length() + 1);
             }
         }
     }
