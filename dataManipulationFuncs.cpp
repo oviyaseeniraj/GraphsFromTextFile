@@ -28,51 +28,26 @@ vector<vector<double>> parseData(const string pathToFile, size_t numCol)
         exit(2);
     }
 
-    // while (!ifs.eof())
-    // {
-    //     string row = "";
-    //     getline(ifs, row);
-    //     for (size_t i = 0; i < numCol; i++)
-    //     {
-
-    //         string delimiter = ",";
-    //         size_t start = 0;
-    //         size_t end;
-    //         string word;
-    //         while (row.find(delimiter) != string::npos)
-    //         {
-    //             end = row.find(delimiter);
-    //             word = row.substr(start, end);
-    //             if (end == 1 || end == 0)
-    //             {
-    //                 result.at(i).clear();
-    //                 i--;
-    //                 break;
-    //             }
-    //             result.at(i).push_back(stod(word));
-    //             row.erase(start, word.length() + 1);
-    //         }
-    //     }
-    // }
-
     while (!ifs.fail())
     {
-        string val = "";
-        vector<double> row;
-        for (int i = 0; i < numCol; i++)
+        string time;
+        string oxygen;
+        string carbon;
+
+        ifs >> time;
+        ifs >> oxygen;
+        ifs >> carbon;
+
+        if (carbon == "")
         {
-            getline(ifs, val, ',');
-            if (val == "")
-            {
-                row.clear();
-                break;
-            }
-            else
-            {
-                row.push_back(stod(val));
-            }
+            break;
         }
-        result.push_back(row);
+        else
+        {
+            result.at(2).push_back(stod(carbon));
+            result.at(1).push_back(stod(oxygen));
+            result.at(0).push_back(stod(time));
+        }
     }
 
     return result;
