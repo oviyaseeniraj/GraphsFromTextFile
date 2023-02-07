@@ -1,6 +1,7 @@
 #include "dataManipulationFuncs.h"
 #include "matplotlibcpp.h"
 #include <vector>
+#include <iostream>
 
 using namespace std;
 namespace plt = matplotlibcpp;
@@ -30,8 +31,7 @@ void scatterPlot(
     Ref: https://github.com/lava/matplotlib-cpp/blob/master/matplotlibcpp.h#L993
     */
     plt::figure();
-    // plt::scatter(x, y, 1.0);
-    plt::plot(x, y, color);
+    plt::scatter(x, y, 1.0, {{"color", color}});
     plt::show();
 
     /* set x and y labels */
@@ -54,8 +54,11 @@ int main()
 
     /* Deliverable 1 */
     vector<vector<double>> data = parseData("./2008CompilationData.csv", NUM_COLUMNS);
+    cout << data.at(0).size();
+    cout << data.at(1).size();
+    cout << data.at(2).size();
 
-    /* Deliverable 2 */
+    // /* Deliverable 2 */
     scatterPlot(data[0], data[1], "Age (ma)", "d18O", "d18O vs Age (ma)", "blue");
     scatterPlot(data[0], data[2], "Age (ma)", "d13C", "d13C vs Age (ma)", "red");
 

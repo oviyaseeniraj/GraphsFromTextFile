@@ -27,93 +27,47 @@ vector<vector<double>> parseData(const string pathToFile, size_t numCol)
         cerr << "Could not open file " + pathToFile << endl;
         exit(2);
     }
-    
-    string data; 
+
+    string data;
 
     while (!ifs.eof())
     {
-        // string row;
-        // getline(ifs, row);
+        string row;
+        getline(ifs, row);
 
-        // bool threeVals = true;
-        // while (row.find(',') != string::npos)
-        // {
-        //     if (row.find(',') == 0 || row.find(',') == row.length() - 1)
-        //     {
-        //         threeVals = false;
-        //         row.at(row.find(',')) = ' ';
-        //     }
-        //     if (!isdigit(row.at(row.find(',') + 1)) || !isdigit(row.at(row.find(',') + 1)))
-        //     {
-        //         threeVals = false;
-        //         row.at(row.find(',')) = ' ';
-        //     }
-        // }
+        bool threeVals = true;
+        while (row.find(',') != string::npos)
+        {
+            if (row.find(',') == 0 || row.find(',') == row.length() - 1)
+            {
+                threeVals = false;
+                row.at(row.find(',')) = ' ';
+            }
+            else if (!isdigit(row.at(row.find(',') + 1)) || !isdigit(row.at(row.find(',') + 1)))
+            {
+                threeVals = false;
+                row.at(row.find(',')) = ' ';
+            }
+            else
+            {
+                row.at(row.find(',')) = ' ';
+            }
+        }
 
-        // if (threeVals == false)
-        // {
-        //     continue;
-        // }
+        if (threeVals == false)
+        {
+            continue;
+        }
 
-        // stringstream unsplit(row);
+        stringstream unsplit(row);
 
-        // for (size_t i = 0; i < numCol; i++)
-        // {
-        //     string var = "";
-        //     getline(unsplit, var, ' ');
-        //     result[i].push_back(stod(var));
-        // }
-
-        getline(ifs, data, ',');
-        if(data.length()==0){continue;}
-        else {result[0].push_back(stod(data));}
-
-        getline(ifs, data, ',');
-        if(data.length()==0){result[0].pop_back(); continue;}
-        else {result[1].push_back(stod(data));}
-
-        getline(ifs, data);
-        if(data.length()==0){result[0].pop_back(); result[1].pop_back(); continue;}
-        else {result[2].push_back(stod(data));}
-
-        // string row;
-        // getline(ifs, row);
-
-        // stringstream unparsed(row);
-
-        // vector<string> parsedRow;
-
-        // string arr[3];
-        // size_t i = 0;
-        // for (i = 0; i < numCol; i++) //will this necessarily update i outside of the scope of the for loop?
-        // {
-        //     getline(unparsed, arr[i], ',');
-        //     if (arr[i] == "")
-        //     {
-        //         break;
-        //     }
-        // }
-
-        // if (i + 1 == numCol)
-        // {
-        //     if (arr[2] == "")
-        //         continue;
-        //     result[0].push_back(stod(arr[0]));
-        //     result[1].push_back(stod(arr[1]));
-        //     result[2].push_back(stod(arr[2]));
-        // }
-
-        // vector<double> parsedRow;
-
-        // for (int i = 0; i < row.length(); i++)
-        // {
-        //     if (row.at(i) == ',')
-        //     {
-        //         parsedRow.push_back(stod(row.substr(0, i)));
-        //         row.erase(0, i + 1);
-        //         i = 0;
-        //     }
-        // }
+        for (size_t i = 0; i < numCol; i++)
+        {
+            string var = "";
+            getline(unsplit, var, ' ');
+            if (var != "")
+                result[i].push_back(stod(var));
+        }
     }
     ifs.close();
     return result;
@@ -141,12 +95,12 @@ vector<vector<double>> smoothData(vector<vector<double>> &rawData, size_t window
 
     for (size_t i = 0; i < rawData.size(); i++)
     {
-        size_t window = 3;
-        if (rawData.size() - 1 - i < 3)
+        size_t window = windowSize;
+        if (rawData.size() - i < windowSize)
         {
             window = rawData.size() - i;
         }
-        result.at(i).push_back(getAvgNextNValues(rawData[i], i, window));
+        result[i].push_back(getAvgNextNValues(rawData[i], i, window));
     }
     return result;
 }
@@ -213,7 +167,7 @@ double getAvgNextNValues(vector<double> const &v, size_t startIndex, size_t wind
     double sum = 0.0;
     for (size_t i = 0; i < windowLength; i++)
     {
-        sum = sum + v.at(startIndex + i);
+        sum = sum + v[startIndex + i];
     }
     return (sum / windowLength);
 }
