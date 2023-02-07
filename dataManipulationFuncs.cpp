@@ -33,29 +33,62 @@ vector<vector<double>> parseData(const string pathToFile, size_t numCol)
         string row;
         getline(ifs, row);
 
-        stringstream unparsed(row);
-
-        // vector<string> parsedRow;
-
-        string arr[3];
-        size_t i = 0;
-        for (i = 0; i < numCol; i++)
+        bool threeVals = true;
+        while (row.find(',') != string::npos)
         {
-            getline(unparsed, arr[i], ',');
-            if (arr[i] == "")
+            if (row.fin
+            d(',') == 0 || row.find(',') == row.length() - 1)
             {
-                break;
+                threeVals = false;
+                row.at(row.find(',')) = ' ';
+            }
+            if (!isdigit(row.at(row.find(',') + 1)) || !isdigit(row.at(row.find(',') + 1)))
+            {
+                threeVals = false;
+                row.at(row.find(',')) = ' ';
             }
         }
 
-        if (i + 1 == numCol)
+        if (threeVals == false)
         {
-            if (arr[2] == "")
-                break;
-            result.at(0).push_back(stod(arr[0]));
-            result.at(1).push_back(stod(arr[1]));
-            result.at(2).push_back(stod(arr[2]));
+            continue;
         }
+
+        stringstream unsplit(row);
+
+        for (size_t i = 0; i < numCol; i++)
+        {
+            string var = "";
+            getline(unsplit, var, ' ');
+            result[i].push_back(stod(var));
+        }
+
+        // string row;
+        // getline(ifs, row);
+
+        // stringstream unparsed(row);
+
+        // vector<string> parsedRow;
+
+        // string arr[3];
+        // size_t i = 0;
+        // for (i = 0; i < numCol; i++) //will this necessarily update i outside of the scope of the for loop?
+        // {
+        //     getline(unparsed, arr[i], ',');
+        //     if (arr[i] == "")
+        //     {
+        //         break;
+        //     }
+        // }
+
+        // if (i + 1 == numCol)
+        // {
+        //     if (arr[2] == "")
+        //         continue;
+        //     result[0].push_back(stod(arr[0]));
+        //     result[1].push_back(stod(arr[1]));
+        //     result[2].push_back(stod(arr[2]));
+        // }
 
         // vector<double> parsedRow;
 
@@ -126,13 +159,14 @@ vector<vector<double>> filterData(vector<vector<double>> &rawData, int minAge, i
         result.push_back(vector<double>{});
     }
 
-    for (size_t i = 0; i < rawData.size(); i++)
+    for (size_t i = 0; i < rawData[0].size(); i++)
     {
-        for (size_t j = 0; j < rawData.at(i).size(); j++)
+
+        if (rawData.at(0).at(i) >= minAge && rawData.at(0).at(i) <= maxAge)
         {
-            if (rawData.at(i).at(j) >= minAge && rawData.at(i).at(j) <= maxAge)
+            for (size_t j = 0; j < rawData.at(i).size(); j++)
             {
-                result.at(i).push_back(rawData.at(i).at(j));
+                result.at(j).push_back(rawData.at(j).at(i));
             }
         }
     }

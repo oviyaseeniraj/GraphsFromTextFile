@@ -30,6 +30,7 @@ void scatterPlot(
     Ref: https://github.com/lava/matplotlib-cpp/blob/master/matplotlibcpp.h#L993
     */
     plt::figure();
+    // plt::scatter(x, y, 1.0);
     plt::plot(x, y, color);
     plt::show();
 
