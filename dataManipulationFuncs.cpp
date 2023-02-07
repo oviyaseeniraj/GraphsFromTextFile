@@ -58,7 +58,6 @@ vector<vector<double>> parseData(const string pathToFile, size_t numCol)
         }
 
         stringstream unsplit(row);
-        cout << row << endl;
 
         for (size_t i = 0; i < numCol; i++)
         {
@@ -126,12 +125,11 @@ vector<vector<double>> filterData(vector<vector<double>> &rawData, int minAge, i
 
     for (size_t i = 0; i < rawData[0].size(); i++)
     {
-
-        if (rawData.at(0).at(i) >= minAge && rawData.at(0).at(i) <= maxAge)
+        if (rawData[0][i] >= minAge && rawData[0][i] <= maxAge)
         {
-            for (size_t j = 0; j < rawData.at(i).size(); j++)
+            for (size_t j = 0; j < rawData.size(); j++)
             {
-                result.at(j).push_back(rawData.at(j).at(i));
+                result[j].push_back(rawData[j][i]);
             }
         }
     }
