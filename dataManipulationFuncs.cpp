@@ -90,14 +90,9 @@ vector<vector<double>> smoothData(vector<vector<double>> &rawData, size_t window
 
     for (size_t i = 1; i < rawData.size(); i++)
     {
-        size_t window = windowSize;
-        if (rawData[i].size() - i < windowSize)
-        {
-            window = rawData[i].size() - i;
-        }
         for (size_t j = 0; j < rawData[i].size(); j++)
         {
-            result[i][j] = getAvgNextNValues(rawData[i], j, window);
+            result[i][j] = getAvgNextNValues(rawData[i], j, windowSize);
         }
     }
     return result;
@@ -162,7 +157,12 @@ vector<vector<double>> filterData(vector<vector<double>> &rawData, int minAge, i
 double getAvgNextNValues(vector<double> const &v, size_t startIndex, size_t windowLength)
 {
     double sum = 0.0;
-    for (size_t i = 0; i < windowLength; i++)
+    size_t window = windowLength;
+    if (startIndex + windowLength < v.size())
+    {
+        window = v.size() - startIndex;
+    }
+    for (size_t i = 0; i < window; i++)
     {
         sum = sum + v[startIndex + i];
     }
