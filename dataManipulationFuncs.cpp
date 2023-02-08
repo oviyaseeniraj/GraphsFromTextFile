@@ -88,16 +88,16 @@ vector<vector<double>> smoothData(vector<vector<double>> &rawData, size_t window
 
     vector<vector<double>> result(rawData);
 
-    for (size_t i = 0; i < rawData.size(); i++)
+    for (size_t i = 1; i < rawData.size(); i++)
     {
         size_t window = windowSize;
-        if (rawData.size() - i < windowSize)
+        if (rawData[i].size() - i < windowSize)
         {
-            window = rawData.size() - i;
+            window = rawData[i].size() - i;
         }
         for (size_t j = 0; j < rawData[i].size(); j++)
         {
-            result[i][j] = getAvgNextNValues(rawData[i], i, window);
+            result[i][j] = getAvgNextNValues(rawData[i], j, window);
         }
     }
     return result;
